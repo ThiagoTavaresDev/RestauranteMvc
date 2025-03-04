@@ -1,0 +1,156 @@
+﻿@using RestauranteMvc.Extensions
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Restaurante Gourmet</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                    Restaurante Gourmet
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Cardapio">Cardápio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Reservas" asp-action="Create">Reservas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Sobre">Sobre</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Contato">Contato</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        @if (Context.Session.GetString("NomeUsuario") != null)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user"></i> @Context.Session.GetString("NomeUsuario")
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @if (Context.Session.GetString("TipoUsuario") == "Admin")
+                                    {
+                                        <a class="dropdown-item" asp-controller="Pratos" asp-action="Index">Gerenciar Pratos</a>
+                                        <a class="dropdown-item" asp-controller="Reservas" asp-action="AdminList">Gerenciar Reservas</a>
+                                        <a class="dropdown-item" asp-controller="Pedidos" asp-action="GerenciarPedidos">Gerenciar Pedidos</a>
+                                        <div class="dropdown-divider"></div>
+                                    }
+                                    <a class="dropdown-item" asp-controller="Reservas" asp-action="Index">Minhas Reservas</a>
+                                    <a class="dropdown-item" asp-controller="Pedidos" asp-action="MeusPedidos">Meus Pedidos</a>
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="Logout">Sair</a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Registro">Cadastre-se</a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Pedidos" asp-action="Carrinho">
+                                <i class="fas fa-shopping-cart"></i>
+                                @{
+                                    var carrinho = Context.Session.GetObjectFromJson<List<ItemCarrinho>>("Carrinho");
+                                    var quantidade = 0;
+                                    if (carrinho != null)
+                                    {
+                                        quantidade = carrinho.Sum(i => i.Quantidade);
+                                    }
+                                }
+                                <span id="cart-count" class="badge badge-light">@quantidade</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <main role="main" class="pb-3">
+            @if (TempData["Sucesso"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["Sucesso"]
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            
+            @if (TempData["Erro"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["Erro"]
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted bg-dark">
+        <div class="container text-center text-light">
+            <div class="row py-4">
+                <div class="col-md-4">
+                    <h5>Restaurante Gourmet</h5>
+                    <p>Avenida Principal, 123<br>
+                    Centro - Cidade - Estado<br>
+                    CEP: 12345-678</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Horário de Funcionamento</h5>
+                    <p>Segunda a Sexta: 11h às 23h<br>
+                    Sábados e Domingos: 11h às 00h</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contato</h5>
+                    <p>Telefone: (11) 1234-5678<br>
+                    Email: contato@restaurantegourmet.com</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-light mx-1"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-light mx-1"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-light mx-1"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row border-top pt-3">
+                <div class="col">
+                    &copy; 2025 - Restaurante Gourmet - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-light">Política de Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

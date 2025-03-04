@@ -1,0 +1,139 @@
+﻿@model RestauranteMvc.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="hero-section">
+    <div class="hero-image">
+        <img src="~/images/restaurant-hero.jpg" class="img-fluid" alt="Restaurante Gourmet">
+    </div>
+    <div class="hero-content text-center my-5">
+        <h1 class="display-4">Bem-vindo ao Restaurante Gourmet</h1>
+        <p class="lead">Uma experiência gastronômica inesquecível para todos os paladares.</p>
+        <div class="my-4">
+            <a asp-controller="Home" asp-action="Cardapio" class="btn btn-primary btn-lg mx-2">Ver Cardápio</a>
+            <a asp-controller="Reservas" asp-action="Create" class="btn btn-outline-primary btn-lg mx-2">Fazer Reserva</a>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Destaques do Cardápio</h2>
+    
+    <div class="row">
+        @foreach (var prato in Model.DestaquesPratos)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="@prato.CaminhoImagem" class="card-img-top" alt="@prato.Nome">
+                    <div class="card-body">
+                        <h5 class="card-title">@prato.Nome</h5>
+                        <p class="card-text">@prato.Descricao</p>
+                        <p class="card-text"><small class="text-muted">@prato.Categoria.Nome</small></p>
+                        <p class="price">R$ @prato.Preco.ToString("F2")</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <button class="btn btn-success add-to-cart" data-id="@prato.PratoId" data-price="@prato.Preco" data-name="@prato.Nome">
+                            <i class="fas fa-cart-plus"></i> Adicionar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    
+    <div class="text-center mt-4">
+        <a asp-controller="Home" asp-action="Cardapio" class="btn btn-outline-primary">Ver Cardápio Completo</a>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Sobre Nós</h2>
+            <p>O Restaurante Gourmet tem como missão proporcionar momentos inesquecíveis através de uma gastronomia de alto nível e um atendimento diferenciado.</p>
+            <p>Nossa cozinha combina técnicas tradicionais com toques contemporâneos, utilizando ingredientes frescos e de alta qualidade.</p>
+            <a asp-controller="Home" asp-action="Sobre" class="btn btn-outline-dark">Saiba Mais</a>
+        </div>
+        <div class="col-md-6">
+            <img src="~/images/about-us.jpg" class="img-fluid rounded" alt="Sobre nós">
+        </div>
+    </div>
+</div>
+
+<div class="bg-light py-5 my-5">
+    <div class="container">
+        <h2 class="text-center mb-4">O que nossos clientes dizem</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="testimonial-rating text-warning">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="card-text">"Experiência incrível! A comida é fantástica e o ambiente muito acolhedor. Recomendo especialmente os pratos de frutos do mar."</p>
+                        <p class="font-weight-bold mb-0">Maria Silva</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="testimonial-rating text-warning">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="card-text">"Lugar perfeito para um jantar romântico. Atendimento impecável e a sobremesa de chocolate é divina!"</p>
+                        <p class="font-weight-bold mb-0">João Santos</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="testimonial-rating text-warning">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="card-text">"Sempre que venho à cidade, faço questão de jantar aqui. O menu degustação é uma experiência incrível que recomendo a todos."</p>
+                        <p class="font-weight-bold mb-0">Ana Oliveira</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.add-to-cart').click(function() {
+                var pratoId = $(this).data('id');
+                
+                $.ajax({
+                    url: '@Url.Action("AdicionarAoCarrinho", "Pedidos")',
+                    type: 'POST',
+                    data: { pratoId: pratoId, quantidade: 1 },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#cart-count').text(response.count);
+                            toastr.success(response.message);
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,148 @@
+@model IEnumerable<Categoria>
+@{
+    ViewData["Title"] = "Cardápio";
+}
+
+<h1 class="text-center my-4">Nosso Cardápio</h1>
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-6 offset-md-3">
+            <div class="input-group">
+                <input type="text" id="search-menu" class="form-control" placeholder="Buscar itens no cardápio...">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="btn-search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="category-menu mb-4">
+        <ul class="nav nav-pills justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" href="#" data-category="all">Todos</a>
+            </li>
+            @foreach (var categoria in Model)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="#@categoria.Nome.ToLower()" data-category="@categoria.CategoriaId">@categoria.Nome</a>
+                </li>
+            }
+        </ul>
+    </div>
+    
+    <div class="menu-items">
+        @foreach (var categoria in Model)
+        {
+            <div class="category-section mb-5" id="@categoria.Nome.ToLower()">
+                <h2 class="text-center mb-4">@categoria.Nome</h2>
+                <p class="text-center mb-4">@categoria.Descricao</p>
+                
+                <div class="row">
+                    @foreach (var prato in categoria.Pratos)
+                    {
+                        <div class="col-md-4 mb-4 menu-item" data-category="@categoria.CategoriaId" data-name="@prato.Nome.ToLower()">
+                            <div class="card h-100">
+                                <img src="@prato.CaminhoImagem" class="card-img-top menu-img" alt="@prato.Nome">
+                                <div class="card-body">
+                                    <h5 class="card-title">@prato.Nome</h5>
+                                    <p class="card-text">@prato.Descricao</p>
+                                    <p class="price">R$ @prato.Preco.ToString("F2")</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-top-0">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="quantity-control">
+                                            <button class="btn btn-sm btn-outline-secondary qty-btn" data-action="decrease">-</button>
+                                            <input type="number" class="form-control form-control-sm qty-input" value="1" min="1" max="10">
+                                            <button class="btn btn-sm btn-outline-secondary qty-btn" data-action="increase">+</button>
+                                        </div>
+                                        <button class="btn btn-success btn-sm add-to-cart" data-id="@prato.PratoId">
+                                            <i class="fas fa-cart-plus"></i> Adicionar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Filtragem por categoria
+            $('.category-menu .nav-link').click(function(e) {
+                e.preventDefault();
+                
+                $('.category-menu .nav-link').removeClass('active');
+                $(this).addClass('active');
+                
+                var categoryId = $(this).data('category');
+                
+                if (categoryId === 'all') {
+                    $('.menu-item').show();
+                } else {
+                    $('.menu-item').hide();
+                    $('.menu-item[data-category="' + categoryId + '"]').show();
+                }
+            });
+            
+            // Busca
+            $('#search-menu').on('keyup', function() {
+                var searchText = $(this).val().toLowerCase();
+                
+                $('.menu-item').each(function() {
+                    var itemName = $(this).data('name');
+                    
+                    if (itemName.includes(searchText)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+            
+            // Controle de quantidade
+            $('.qty-btn').click(function() {
+                var input = $(this).siblings('.qty-input');
+                var currentValue = parseInt(input.val());
+                
+                if ($(this).data('action') === 'increase') {
+                    if (currentValue < 10) {
+                        input.val(currentValue + 1);
+                    }
+                } else {
+                    if (currentValue > 1) {
+                        input.val(currentValue - 1);
+                    }
+                }
+            });
+            
+            // Adicionar ao carrinho
+            $('.add-to-cart').click(function() {
+                var button = $(this);
+                var pratoId = button.data('id');
+                var quantidade = button.closest('.card-footer').find('.qty-input').val();
+                
+                $.ajax({
+                    url: '@Url.Action("AdicionarAoCarrinho", "Pedidos")',
+                    type: 'POST',
+                    data: { pratoId: pratoId, quantidade: quantidade },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#cart-count').text(response.count);
+                            toastr.success(response.message);
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

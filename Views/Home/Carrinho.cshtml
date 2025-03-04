@@ -1,0 +1,156 @@
+@{
+    ViewData["Title"] = "Carrinho de Compras";
+    
+    var carrinho = Context.Session.GetObjectFromJson<List<ItemCarrinho>>("Carrinho") ?? new List<ItemCarrinho>();
+    var total = carrinho.Sum(i => i.Preco * i.Quantidade);
+}
+
+<div class="container">
+    <h1 class="my-4">Seu Carrinho</h1>
+    
+    @if (!carrinho.Any())
+    {
+        <div class="text-center my-5">
+            <i class="fas fa-shopping-cart fa-4x mb-3 text-muted"></i>
+            <h2>Seu carrinho está vazio</h2>
+            <p class="lead">Adicione alguns itens deliciosos do nosso cardápio.</p>
+            <a asp-controller="Home" asp-action="Cardapio" class="btn btn-primary mt-3">Ver Cardápio</a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Itens do Carrinho (@carrinho.Sum(i => i.Quantidade))</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th scope="col" class="border-0">Produto</th>
+                                        <th scope="col" class="border-0">Preço</th>
+                                        <th scope="col" class="border-0">Quantidade</th>
+                                        <th scope="col" class="border-0">Subtotal</th>
+                                        <th scope="col" class="border-0"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in carrinho)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    @if (!string.IsNullOrEmpty(item.Imagem))
+                                                    {
+                                                        <img src="@item.Imagem" class="img-thumbnail mr-3" style="width: 60px; height: 60px; object-fit: cover;" alt="@item.Nome">
+                                                    }
+                                                    <div>
+                                                        <h6 class="mb-0">@item.Nome</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>R$ @item.Preco.ToString("F2")</td>
+                                            <td>
+                                                <div class="quantity-control d-flex align-items-center">
+                                                    <button class="btn btn-sm btn-outline-secondary qty-update" data-id="@item.PratoId" data-action="decrease">-</button>
+                                                    <span class="mx-2">@item.Quantidade</span>
+                                                    <button class="btn btn-sm btn-outline-secondary qty-update" data-id="@item.PratoId" data-action="increase">+</button>
+                                                </div>
+                                            </td>
+                                            <td>R$ @((item.Preco * item.Quantidade).ToString("F2"))</td>
+                                            <td>
+                                                <form asp-action="RemoverDoCarrinho" method="post">
+                                                    <input type="hidden" name="pratoId" value="@item.PratoId">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <a asp-controller="Home" asp-action="Cardapio" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left mr-2"></i> Continuar Comprando
+                    </a>
+                    <form asp-action="LimparCarrinho" method="post">
+                        <button type="submit" class="btn btn-outline-danger">
+                            <i class="fas fa-trash mr-2"></i> Limpar Carrinho
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Resumo do Pedido</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Subtotal</span>
+                            <span>R$ @total.ToString("F2")</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Taxa de Entrega</span>
+                            <span>R$ 5,00</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-3">
+                            <strong>Total</strong>
+                            <strong>R$ @((total + 5).ToString("F2"))</strong>
+                        </div>
+                        
+                        @if (Context.Session.GetString("NomeUsuario") != null)
+                        {
+                            <a asp-controller="Pedidos" asp-action="Checkout" class="btn btn-success btn-block">
+                                <i class="fas fa-check mr-2"></i> Finalizar Pedido
+                            </a>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info mb-3">
+                                <p class="mb-2">Para finalizar o pedido, é necessário ter uma conta e estar logado.</p>
+                                <div class="d-flex flex-column">
+                                    <a asp-controller="Account" asp-action="Login" class="btn btn-primary mb-2">Fazer Login</a>
+                                    <a asp-controller="Account" asp-action="Registro" class="btn btn-outline-primary">Cadastrar-se</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.qty-update').click(function() {
+                var button = $(this);
+                var pratoId = button.data('id');
+                var action = button.data('action');
+                
+                $.ajax({
+                    url: '@Url.Action("AtualizarQuantidade", "Pedidos")',
+                    type: 'POST',
+                    data: { pratoId: pratoId, action: action },
+                    success: function(response) {
+                        if (response.success) {
+                            location.reload();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}
