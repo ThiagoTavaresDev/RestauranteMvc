@@ -1,0 +1,59 @@
+@model RestauranteMvc.Models.Prato
+@{
+    ViewData["Title"] = "Excluir Prato";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow-sm border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="card-title mb-0">Confirmar Exclusão</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i> Tem certeza que deseja excluir este prato? Esta ação não pode ser desfeita.
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4 text-center">
+                            @if (!string.IsNullOrEmpty(Model.CaminhoImagem))
+                            {
+                                <img src="@Model.CaminhoImagem" class="img-thumbnail" style="max-height: 150px;" alt="@Model.Nome" />
+                            }
+                            else
+                            {
+                                <img src="/images/no-image.png" class="img-thumbnail" style="max-height: 150px;" alt="Sem imagem" />
+                            }
+                        </div>
+                        <div class="col-md-8">
+                            <dl class="row">
+                                <dt class="col-sm-4">Nome:</dt>
+                                <dd class="col-sm-8">@Model.Nome</dd>
+                                
+                                <dt class="col-sm-4">Categoria:</dt>
+                                <dd class="col-sm-8">@Model.Categoria.Nome</dd>
+                                
+                                <dt class="col-sm-4">Preço:</dt>
+                                <dd class="col-sm-8">R$ @Model.Preco.ToString("F2")</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" name="id" value="@Model.PratoId" />
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left"></i> Voltar
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Confirmar Exclusão
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

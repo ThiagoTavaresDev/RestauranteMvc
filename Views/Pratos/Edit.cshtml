@@ -1,0 +1,85 @@
+@model RestauranteMvc.Dtos.PratoViewDto
+@{
+    ViewData["Title"] = "Editar Prato";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title mb-0">Editar Prato</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="PratoId" />
+                        <input type="hidden" asp-for="CaminhoImagemAtual" />
+                        
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Nome" class="form-label"></label>
+                            <input asp-for="Nome" class="form-control" />
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Descricao" class="form-label"></label>
+                            <textarea asp-for="Descricao" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Descricao" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Preco" class="form-label"></label>
+                                <div class="input-group">
+                                    <span class="input-group-text">R$</span>
+                                    <input asp-for="Preco" class="form-control" />
+                                </div>
+                                <span asp-validation-for="Preco" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label asp-for="CategoriaId" class="form-label"></label>
+                                <select asp-for="CategoriaId" asp-items="ViewBag.Categorias" class="form-select">
+                                    <option value="">Selecione uma categoria</option>
+                                </select>
+                                <span asp-validation-for="CategoriaId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        @if (!string.IsNullOrEmpty(Model.CaminhoImagemAtual))
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">Imagem Atual</label>
+                                <div>
+                                    <img src="@Model.CaminhoImagemAtual" style="max-height: 150px;" class="img-thumbnail" alt="@Model.Nome" />
+                                </div>
+                            </div>
+                        }
+                        
+                        <div class="mb-3">
+                            <label asp-for="Imagem" class="form-label"></label>
+                            <input asp-for="Imagem" type="file" class="form-control" accept="image/*" />
+                            <span asp-validation-for="Imagem" class="text-danger"></span>
+                            <small class="form-text text-muted">Deixe em branco para manter a imagem atual. Formatos aceitos: JPG, PNG. Tamanho máximo: 2MB</small>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left"></i> Voltar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Salvar Alterações
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

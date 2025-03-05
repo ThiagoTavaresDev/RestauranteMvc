@@ -12,8 +12,8 @@ using RestauranteMvc.Data;
 namespace RestauranteMvc.Migrations
 {
     [DbContext(typeof(RestauranteContext))]
-    [Migration("20250304185622_initial")]
-    partial class initial
+    [Migration("20250305014731_initalmigration")]
+    partial class initalmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

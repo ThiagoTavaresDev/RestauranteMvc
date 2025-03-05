@@ -1,0 +1,47 @@
+@model RestauranteMvc.Dtos.LoginViewDto
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h2 class="text-center mb-0">Login</h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Account" asp-action="Login" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label">Email</label>
+                        <input asp-for="Email" class="form-control" placeholder="Digite seu email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Senha" class="form-label">Senha</label>
+                        <input asp-for="Senha" class="form-control" placeholder="Digite sua senha" />
+                        <span asp-validation-for="Senha" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        <input asp-for="LembrarMe" class="form-check-input" />
+                        <label asp-for="LembrarMe" class="form-check-label">Lembrar-me</label>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Entrar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <p class="mb-0">Não tem uma conta? <a asp-controller="Account" asp-action="Registro">Registre-se</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

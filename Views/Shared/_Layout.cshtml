@@ -38,6 +38,22 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Contato">Contato</a>
                         </li>
+                        @if (Context.Session.GetString("TipoUsuario") == "Admin")
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-cog"></i> Administração
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                                    <li><a class="dropdown-item" asp-controller="Pratos" asp-action="Index">Gerenciar Pratos</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Categorias" asp-action="Index">Gerenciar Categorias</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" asp-controller="Reservas" asp-action="ListAll">Gerenciar Reservas</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Pedidos" asp-action="ListAll">Gerenciar Pedidos</a></li>
+                                </ul>
+                            </li>
+                        }
+
                     </ul>
                     <ul class="navbar-nav">
                         @if (Context.Session.GetString("NomeUsuario") != null)

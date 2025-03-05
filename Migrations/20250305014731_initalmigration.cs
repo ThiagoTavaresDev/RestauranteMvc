@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RestauranteMvc.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class initalmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
