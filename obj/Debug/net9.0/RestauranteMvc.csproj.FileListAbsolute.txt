@@ -140,7 +140,6 @@ C:\Users\Thzin\Desktop\RestauranteMvc\bin\Debug\net9.0\runtimes\win\lib\net6.0\S
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\scopedcss\bundle\RestauranteMvc.styles.css
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\scopedcss\projectbundle\RestauranteMvc.bundle.scp.css
-C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\ssel5aqqbp-b9sayid5wm.gz
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\bc364sxfje-61n19gt1b8.gz
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\6f34gkwvcm-xtxxf3hu2r.gz
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\a5puzphc3v-bqjiyaj88i.gz
@@ -202,8 +201,6 @@ C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\vxnmxgsox2-2z0
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\iau6hh8z81-muycvpuwrr.gz
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\dymmul1j3y-87fc7y1x7t.gz
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\vhjl5bcvld-mlv21k5csn.gz
-C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\tdp2z13n4b-u8i52r3l2g.gz
-C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\qiscu6nqcl-u8i52r3l2g.gz
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\staticwebassets.build.endpoints.json
@@ -443,3 +440,7 @@ C:\Users\Thiag\Desktop\RestauranteMvc\obj\Debug\net9.0\refint\RestauranteMvc.dll
 C:\Users\Thiag\Desktop\RestauranteMvc\obj\Debug\net9.0\RestauranteMvc.pdb
 C:\Users\Thiag\Desktop\RestauranteMvc\obj\Debug\net9.0\RestauranteMvc.genruntimeconfig.cache
 C:\Users\Thiag\Desktop\RestauranteMvc\obj\Debug\net9.0\ref\RestauranteMvc.dll
+C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\RestauranteMvc.sourcelink.json
+C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\ssel5aqqbp-khvf9fx418.gz
+C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\tdp2z13n4b-2qoad3l8um.gz
+C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\qiscu6nqcl-2qoad3l8um.gz
