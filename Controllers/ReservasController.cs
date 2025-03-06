@@ -120,5 +120,23 @@ namespace RestauranteMvc.Controllers
             TempData["Sucesso"] = "Status da reserva atualizado com sucesso!";
             return RedirectToAction(nameof(AdminList));
         }
+
+        [HttpPost]
+        [Route("Delete")]   
+        [ValidateAntiForgeryToken] 
+        public async Task<IActionResult> Delete(int id){
+
+            var reserva = await _context.Reservas.FindAsync(id);
+
+            if (reserva == null)  {
+                return NotFound();
+            }
+
+            _context.Reservas.Remove(reserva);
+            await _context.SaveChangesAsync();
+            TempData["Sucesso"] = "Reserva excluida com sucesso!";
+
+            return RedirectToAction(nameof(AdminList));
+        }
     }
 }

@@ -60,6 +60,18 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"s1yxs4pt4i"},{"Name":"integrity","Value":"sha256-YNnNORUR/zHfjvug\u002BpfOx1Cwz0YWz01o2D\u002BoaZbze7k="},{"Name":"label","Value":"_content/RestauranteMvc/images/pratos/54382ebe-3a93-44f9-be5b-cdc41f680b16_image_with_updated_background.png"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"68026"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022YNnNORUR/zHfjvug\u002BpfOx1Cwz0YWz01o2D\u002BoaZbze7k=\u0022"},{"Name":"Last-Modified","Value":"Wed, 05 Mar 2025 19:29:21 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/RestauranteMvc/images/pratos/84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\pratos\84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-PdzgedlJnenwea4NPYGRcRyHwrWFSw9Vn\u002B0zGbBEppI="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"26421"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022PdzgedlJnenwea4NPYGRcRyHwrWFSw9Vn\u002B0zGbBEppI=\u0022"},{"Name":"Last-Modified","Value":"Thu, 06 Mar 2025 18:30:38 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/RestauranteMvc/images/pratos/84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.r2252a6m61.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\pratos\84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"r2252a6m61"},{"Name":"integrity","Value":"sha256-PdzgedlJnenwea4NPYGRcRyHwrWFSw9Vn\u002B0zGbBEppI="},{"Name":"label","Value":"_content/RestauranteMvc/images/pratos/84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"26421"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022PdzgedlJnenwea4NPYGRcRyHwrWFSw9Vn\u002B0zGbBEppI=\u0022"},{"Name":"Last-Modified","Value":"Thu, 06 Mar 2025 18:30:38 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/RestauranteMvc/js/site.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>

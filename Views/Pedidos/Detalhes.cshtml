@@ -1,0 +1,107 @@
+@model Pedido
+@{
+    ViewData["Title"] = "Detalhes do Pedido";
+}
+
+<div class="container my-4">
+    @if (TempData["Sucesso"] != null)
+    {
+        <div class="alert alert-success mb-4">
+            <i class="fas fa-check-circle mr-2"></i> @TempData["Sucesso"]
+        </div>
+    }
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Pedido #@Model.PedidoId</h4>
+            <span class="badge badge-light">@Model.Status.ToString()</span>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h5 class="mb-3">Informações do Pedido</h5>
+                    <p><strong>Data:</strong> @Model.DataPedido.ToString("dd/MM/yyyy HH:mm")</p>
+                    <p><strong>Status:</strong> @Model.Status.ToString()</p>
+                    <p><strong>Valor Total:</strong> R$ @Model.ValorTotal.ToString("F2")</p>
+                    @if (!string.IsNullOrEmpty(Model.Observacoes))
+                    {
+                        <p><strong>Observações:</strong> @Model.Observacoes</p>
+                    }
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-3">Endereço de Entrega</h5>
+                    <address>
+                        @Model.Endereco.Logradouro, @Model.Endereco.Numero<br />
+                        @if (!string.IsNullOrEmpty(Model.Endereco.Complemento))
+                        {
+                            @Model.Endereco.Complemento<br />
+                        }
+                        @Model.Endereco.Bairro<br />
+                        @Model.Endereco.Cidade, @Model.Endereco.Estado<br />
+                        CEP: @Model.Endereco.CEP<br />
+                        @if (!string.IsNullOrEmpty(Model.Endereco.PontoReferencia))
+                        {
+                            <span>Ponto de Referência: @Model.Endereco.PontoReferencia</span>
+                        }
+                    </address>
+                </div>
+            </div>
+
+            <h5 class="mb-3">Itens do Pedido</h5>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Preço Unitário</th>
+                            <th>Quantidade</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ItensPedido)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        @if (item.Prato != null && !string.IsNullOrEmpty(item.Prato.CaminhoImagem))
+                                        {
+                                            <img src="@item.Prato.CaminhoImagem" class="img-thumbnail mr-3" style="width: 50px; height: 50px; object-fit: cover;" alt="@item.Prato.Nome">
+                                        }
+                                        <span>@(item.Prato?.Nome ?? "Produto não disponível")</span>
+                                    </div>
+                                </td>
+                                <td>R$ @item.PrecoUnitario.ToString("F2")</td>
+                                <td>@item.Quantidade</td>
+                                <td>R$ @((item.PrecoUnitario * item.Quantidade).ToString("F2"))</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-right font-weight-bold">Subtotal:</td>
+                            <td>R$ @Model.ValorTotal.ToString("F2")</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-right font-weight-bold">Taxa de Entrega:</td>
+                            <td>R$ 5,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-right font-weight-bold">Total:</td>
+                            <td class="font-weight-bold">R$ @((Model.ValorTotal + 5).ToString("F2"))</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary">
+            <i class="fas fa-home mr-2"></i> Voltar para a Página Inicial
+        </a>
+        <a asp-controller="Pedidos" asp-action="MeusPedidos" class="btn btn-primary">
+            <i class="fas fa-list mr-2"></i> Meus Pedidos
+        </a>
+    </div>
+</div>

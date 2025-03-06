@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "lVsRySK56c5L+Qw3M+cFo0tPwYyYCu90+vIRwH3EokI=",
+  "Hash": "5lVQRaMmHh3o/hqkfuPCSY1LsbFy7D/4KavqhpXKr3A=",
   "Source": "RestauranteMvc",
   "BasePath": "_content/RestauranteMvc",
   "Mode": "Default",
@@ -1506,6 +1506,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\pratos\\54382ebe-3a93-44f9-be5b-cdc41f680b16_image_with_updated_background.png"
+    },
+    {
+      "Identity": "C:\\Users\\Thzin\\Desktop\\RestauranteMvc\\wwwroot\\images\\pratos\\84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg",
+      "SourceId": "RestauranteMvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Thzin\\Desktop\\RestauranteMvc\\wwwroot\\",
+      "BasePath": "_content/RestauranteMvc",
+      "RelativePath": "images/pratos/84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "r2252a6m61",
+      "Integrity": "PdzgedlJnenwea4NPYGRcRyHwrWFSw9Vn+0zGbBEppI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\pratos\\84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg"
     },
     {
       "Identity": "C:\\Users\\Thzin\\Desktop\\RestauranteMvc\\wwwroot\\js\\site.js",
@@ -3629,6 +3650,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-YNnNORUR/zHfjvug+pfOx1Cwz0YWz01o2D+oaZbze7k="
+        }
+      ]
+    },
+    {
+      "Route": "images/pratos/84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg",
+      "AssetFile": "C:\\Users\\Thzin\\Desktop\\RestauranteMvc\\wwwroot\\images\\pratos\\84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "26421"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PdzgedlJnenwea4NPYGRcRyHwrWFSw9Vn+0zGbBEppI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 18:30:38 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-PdzgedlJnenwea4NPYGRcRyHwrWFSw9Vn+0zGbBEppI="
+        }
+      ]
+    },
+    {
+      "Route": "images/pratos/84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.r2252a6m61.jpg",
+      "AssetFile": "C:\\Users\\Thzin\\Desktop\\RestauranteMvc\\wwwroot\\images\\pratos\\84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "26421"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PdzgedlJnenwea4NPYGRcRyHwrWFSw9Vn+0zGbBEppI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 18:30:38 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "r2252a6m61"
+        },
+        {
+          "Name": "label",
+          "Value": "images/pratos/84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-PdzgedlJnenwea4NPYGRcRyHwrWFSw9Vn+0zGbBEppI="
         }
       ]
     },

@@ -10,11 +10,13 @@ using Microsoft.Extensions.Logging;
 using RestauranteMvc.Data;
 using RestauranteMvc.Dtos;
 using RestauranteMvc.Extensions;
+using RestauranteMvc.Filters;
 using RestauranteMvc.Models;
 
 namespace RestauranteMvc.Controllers
 {
     [Route("[controller]")]
+    [TypeFilter(typeof(AdminAuthFilter))]
     public class PedidosController : Controller
 {
     private readonly RestauranteContext _context;
@@ -23,14 +25,16 @@ namespace RestauranteMvc.Controllers
     {
         _context = context;
     }
-    
-    [Authorize]
+    [HttpGet]
+    [Route("Carrinho")]
+   // [Authorize]
     public IActionResult Carrinho()
     {
         return View();
     }
     
     [HttpPost]
+    [Route("AdicionarAoCarrinho")]
     public IActionResult AdicionarAoCarrinho(int pratoId, int quantidade)
     {
         var prato = _context.Pratos.Find(pratoId);
@@ -67,6 +71,7 @@ namespace RestauranteMvc.Controllers
     }
     
     [HttpPost]
+    [Route("RemoverDoCarrinho")]
     public IActionResult RemoverDoCarrinho(int pratoId)
     {
         var carrinho = HttpContext.Session.GetObjectFromJson<List<ItemCarrinho>>("Carrinho");
@@ -85,7 +90,10 @@ namespace RestauranteMvc.Controllers
         return RedirectToAction(nameof(Carrinho));
     }
     
-    [Authorize]
+
+    [HttpGet]
+    [Route("Checkout")]
+  //  [Authorize]
     public IActionResult Checkout()
     {
         var carrinho = HttpContext.Session.GetObjectFromJson<List<ItemCarrinho>>("Carrinho");
@@ -110,8 +118,9 @@ namespace RestauranteMvc.Controllers
     }
     
     [HttpPost]
+    [Route("FinalizarPedido")]
     [ValidateAntiForgeryToken]
-    [Authorize]
+   // [Authorize]
     public async Task<IActionResult> FinalizarPedido(CheckoutViewDto model)
     {
         var carrinho = HttpContext.Session.GetObjectFromJson<List<ItemCarrinho>>("Carrinho");
@@ -185,7 +194,9 @@ namespace RestauranteMvc.Controllers
         return RedirectToAction("Detalhes", new { id = pedido.PedidoId });
     }
     
-    [Authorize]
+    [HttpGet]
+    [Route("Detalhes/{id}")]
+   // [Authorize]
     public IActionResult Detalhes(int id)
     {
         var pedido = _context.Pedidos
@@ -207,6 +218,8 @@ namespace RestauranteMvc.Controllers
         return View(pedido);
     }
     
+    [HttpGet]
+    [Route("MeusPedidos")]
     [Authorize]
     public IActionResult MeusPedidos()
     {
@@ -244,6 +257,40 @@ namespace RestauranteMvc.Controllers
         TempData["Sucesso"] = "Status do pedido atualizado com sucesso!";
         return RedirectToAction(nameof(GerenciarPedidos));
     }
+
+    [HttpPost]
+    [Route("AtualizarQuantidade")]
+    public IActionResult AtualizarQuantidade(int pratoId, string acao)
+    {
+        var carrinho = HttpContext.Session.GetObjectFromJson<List<ItemCarrinho>>("Carrinho") ?? new List<ItemCarrinho>();
+        
+        var item = carrinho.FirstOrDefault(i => i.PratoId == pratoId);
+        
+        if (item != null)
+        {
+            if (acao == "increase")
+            {
+                item.Quantidade++;
+            }
+            else if (acao == "decrease" && item.Quantidade > 1)
+            {
+                item.Quantidade--;
+            }
+            
+            HttpContext.Session.SetObjectAsJson("Carrinho", carrinho);
+        }
+        
+        return RedirectToAction(nameof(Carrinho));
+    }
+
+    [HttpPost]
+    [Route("LimparCarrinho")]
+    public IActionResult LimparCarrinho()
+    {
+        HttpContext.Session.Remove("Carrinho");
+        return RedirectToAction(nameof(Carrinho));
+    }
+
 }
 
 }

@@ -25,6 +25,10 @@
       "PackagePath": "staticwebassets\\images\\pratos\\54382ebe-3a93-44f9-be5b-cdc41f680b16_image_with_updated_background.png"
     },
     {
+      "Id": "C:\\Users\\Thzin\\Desktop\\RestauranteMvc\\wwwroot\\images\\pratos\\84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg",
+      "PackagePath": "staticwebassets\\images\\pratos\\84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg"
+    },
+    {
       "Id": "C:\\Users\\Thzin\\Desktop\\RestauranteMvc\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

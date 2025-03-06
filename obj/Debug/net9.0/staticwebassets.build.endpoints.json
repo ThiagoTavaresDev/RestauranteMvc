@@ -1143,6 +1143,88 @@
       ]
     },
     {
+      "Route": "images/pratos/84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg",
+      "AssetFile": "images/pratos/84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "26421"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PdzgedlJnenwea4NPYGRcRyHwrWFSw9Vn+0zGbBEppI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 18:30:38 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-PdzgedlJnenwea4NPYGRcRyHwrWFSw9Vn+0zGbBEppI="
+        }
+      ]
+    },
+    {
+      "Route": "images/pratos/84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.r2252a6m61.jpg",
+      "AssetFile": "images/pratos/84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "26421"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PdzgedlJnenwea4NPYGRcRyHwrWFSw9Vn+0zGbBEppI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 18:30:38 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "r2252a6m61"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-PdzgedlJnenwea4NPYGRcRyHwrWFSw9Vn+0zGbBEppI="
+        },
+        {
+          "Name": "label",
+          "Value": "images/pratos/84e0e6c8-ba84-428a-9055-1427a934444e_wallpaperflare.com_wallpaper.jpg"
+        }
+      ]
+    },
+    {
       "Route": "js/site.js",
       "AssetFile": "js/site.js.gz",
       "Selectors": [

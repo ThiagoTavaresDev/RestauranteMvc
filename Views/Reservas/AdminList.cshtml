@@ -87,6 +87,17 @@
                                                 </form>
                                             </li>
                                         }
+
+                                        @if (reserva.Status == StatusReserva.Cancelada)
+                                        {
+                                            <li>
+                                                <form asp-action="Delete" method="post">
+                                                    <input type="hidden" name="id" value="@reserva.ReservaId" />
+                                                    <button type="submit" class="dropdown-item">Deletar</button>
+                                                </form>
+                                            </li>
+                                        }
+
                                     </ul>
                                 </div>
                             </td>

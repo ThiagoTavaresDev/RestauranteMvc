@@ -1,0 +1,200 @@
+@model RestauranteMvc.Dtos.CheckoutViewDto
+@{
+    ViewData["Title"] = "Finalizar Pedido";
+}
+
+<div class="container my-4">
+    <h1 class="mb-4">Finalizar Pedido</h1>
+
+    @if (TempData["Erro"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Erro"]
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Itens do Pedido</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Preço</th>
+                                    <th>Quantidade</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Itens)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                @if (!string.IsNullOrEmpty(item.Imagem))
+                                                {
+                                                    <img src="@item.Imagem" class="img-thumbnail mr-3" style="width: 50px; height: 50px; object-fit: cover;" alt="@item.Nome">
+                                                }
+                                                <span>@item.Nome</span>
+                                            </div>
+                                        </td>
+                                        <td>R$ @item.Preco.ToString("F2")</td>
+                                        <td>@item.Quantidade</td>
+                                        <td>R$ @((item.Preco * item.Quantidade).ToString("F2"))</td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-right font-weight-bold">Subtotal:</td>
+                                    <td>R$ @Model.ValorTotal.ToString("F2")</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-right font-weight-bold">Taxa de Entrega:</td>
+                                    <td>R$ 5,00</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-right font-weight-bold">Total:</td>
+                                    <td class="font-weight-bold">R$ @((Model.ValorTotal + 5).ToString("F2"))</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <form asp-controller="Pedidos" asp-action="FinalizarPedido" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Endereço de Entrega</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.Enderecos != null && Model.Enderecos.Any())
+                        {
+                            <div class="form-group">
+                                <label asp-for="EnderecoId"></label>
+                                <select asp-for="EnderecoId" class="form-control">
+                                    <option value="">Selecione um endereço ou cadastre um novo</option>
+                                    @foreach (var endereco in Model.Enderecos)
+                                    {
+                                        <option value="@endereco.EnderecoId">
+                                            @endereco.Logradouro, @endereco.Numero - @endereco.Bairro, @endereco.Cidade/@endereco.Estado
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                            <hr />
+                            <p>Ou cadastre um novo endereço:</p>
+                        }
+
+                        <div id="novo-endereco">
+                            <div class="form-group">
+                                <label asp-for="NovoEndereco.Logradouro"></label>
+                                <input asp-for="NovoEndereco.Logradouro" class="form-control" />
+                                <span asp-validation-for="NovoEndereco.Logradouro" class="text-danger"></span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="NovoEndereco.Numero"></label>
+                                    <input asp-for="NovoEndereco.Numero" class="form-control" />
+                                    <span asp-validation-for="NovoEndereco.Numero" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="NovoEndereco.Complemento"></label>
+                                    <input asp-for="NovoEndereco.Complemento" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="NovoEndereco.Bairro"></label>
+                                <input asp-for="NovoEndereco.Bairro" class="form-control" />
+                                <span asp-validation-for="NovoEndereco.Bairro" class="text-danger"></span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="NovoEndereco.Cidade"></label>
+                                    <input asp-for="NovoEndereco.Cidade" class="form-control" />
+                                    <span asp-validation-for="NovoEndereco.Cidade" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="NovoEndereco.Estado"></label>
+                                    <input asp-for="NovoEndereco.Estado" class="form-control" />
+                                    <span asp-validation-for="NovoEndereco.Estado" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="NovoEndereco.CEP"></label>
+                                <input asp-for="NovoEndereco.CEP" class="form-control" />
+                                <span asp-validation-for="NovoEndereco.CEP" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="NovoEndereco.PontoReferencia"></label>
+                                <input asp-for="NovoEndereco.PontoReferencia" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Forma de Pagamento</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="FormaPagamento"></label>
+                            <select asp-for="FormaPagamento" class="form-control">
+                                <option value="">Selecione uma opção</option>
+                                <option value="Dinheiro">Dinheiro</option>
+                                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                <option value="Cartão de Débito">Cartão de Débito</option>
+                                <option value="PIX">PIX</option>
+                            </select>
+                            <span asp-validation-for="FormaPagamento" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Observacoes"></label>
+                            <textarea asp-for="Observacoes" class="form-control" rows="3" placeholder="Informações adicionais, troco, etc."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mb-4">
+                    <a asp-controller="Pedidos" asp-action="Carrinho" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left mr-2"></i> Voltar ao Carrinho
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-check mr-2"></i> Confirmar Pedido
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Mostra/esconde o formulário de novo endereço baseado na seleção
+            $("#EnderecoId").change(function() {
+                if ($(this).val() === "") {
+                    $("#novo-endereco").show();
+                } else {
+                    $("#novo-endereco").hide();
+                }
+            });
+
+            // Executa a lógica inicial
+            $("#EnderecoId").trigger("change");
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
