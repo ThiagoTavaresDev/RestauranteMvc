@@ -220,7 +220,7 @@ namespace RestauranteMvc.Controllers
     
     [HttpGet]
     [Route("MeusPedidos")]
-    [Authorize]
+   // [Authorize]
     public IActionResult MeusPedidos()
     {
         int usuarioId = HttpContext.Session.GetInt32("UsuarioId").Value;
@@ -228,7 +228,7 @@ namespace RestauranteMvc.Controllers
         return View(pedidos);
     }
     
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public IActionResult GerenciarPedidos()
     {
         var pedidos = _context.Pedidos
@@ -241,7 +241,7 @@ namespace RestauranteMvc.Controllers
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "Admin")]
+   // [Authorize(Roles = "Admin")]
     public IActionResult AtualizarStatusPedido(int id, StatusPedido status)
     {
         var pedido = _context.Pedidos.Find(id);
