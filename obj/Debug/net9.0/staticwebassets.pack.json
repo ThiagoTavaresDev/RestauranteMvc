@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\images\\imagem_teste.jpg"
     },
     {
+      "Id": "C:\\Users\\Thzin\\Desktop\\RestauranteMvc\\wwwroot\\images\\pratos\\0fe66760-fce6-44a5-9009-7ddcc4705034_Captura de tela 2025-03-06 003054.png",
+      "PackagePath": "staticwebassets\\images\\pratos\\0fe66760-fce6-44a5-9009-7ddcc4705034_Captura de tela 2025-03-06 003054.png"
+    },
+    {
       "Id": "C:\\Users\\Thzin\\Desktop\\RestauranteMvc\\wwwroot\\images\\pratos\\54382ebe-3a93-44f9-be5b-cdc41f680b16_image_with_updated_background.png",
       "PackagePath": "staticwebassets\\images\\pratos\\54382ebe-3a93-44f9-be5b-cdc41f680b16_image_with_updated_background.png"
     },

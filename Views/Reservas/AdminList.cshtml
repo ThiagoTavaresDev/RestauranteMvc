@@ -1,0 +1,99 @@
+@model IEnumerable<RestauranteMvc.Models.Reserva>
+@{
+    ViewData["Title"] = "Gerenciar Reservas";
+}
+
+<div class="container">
+    <h1 class="my-4">Gerenciar Reservas</h1>
+    
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            Não há reservas registradas no sistema.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Pessoas</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var reserva in Model)
+                    {
+                        <tr>
+                            <td>@(reserva.Usuario?.NomeCompleto ?? "N/A")</td>
+                            <td>@reserva.Data.ToShortDateString()</td>
+                            <td>@reserva.Horario.ToString(@"hh\:mm")</td>
+                            <td>@reserva.NumeroPessoas</td>
+                            <td>
+                                @switch (reserva.Status)
+                                {
+                                    case StatusReserva.Pendente:
+                                        <span class="badge bg-warning text-dark">Pendente</span>
+                                        break;
+                                    case StatusReserva.Confirmada:
+                                        <span class="badge bg-success">Confirmada</span>
+                                        break;
+                                    case StatusReserva.Cancelada:
+                                        <span class="badge bg-danger">Cancelada</span>
+                                        break;
+                                    case StatusReserva.Concluida:
+                                        <span class="badge bg-info">Concluída</span>
+                                        break;
+                                }
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Ações
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @if (reserva.Status == StatusReserva.Pendente)
+                                        {
+                                            <li>
+                                                <form asp-action="UpdateStatus" method="post">
+                                                    <input type="hidden" name="id" value="@reserva.ReservaId" />
+                                                    <input type="hidden" name="status" value="@StatusReserva.Confirmada" />
+                                                    <button type="submit" class="dropdown-item">Confirmar</button>
+                                                </form>
+                                            </li>
+                                        }
+                                        @if (reserva.Status == StatusReserva.Pendente || reserva.Status == StatusReserva.Confirmada)
+                                        {
+                                            <li>
+                                                <form asp-action="UpdateStatus" method="post">
+                                                    <input type="hidden" name="id" value="@reserva.ReservaId" />
+                                                    <input type="hidden" name="status" value="@StatusReserva.Cancelada" />
+                                                    <button type="submit" class="dropdown-item">Cancelar</button>
+                                                </form>
+                                            </li>
+                                        }
+                                        @if (reserva.Status == StatusReserva.Confirmada)
+                                        {
+                                            <li>
+                                                <form asp-action="UpdateStatus" method="post">
+                                                    <input type="hidden" name="id" value="@reserva.ReservaId" />
+                                                    <input type="hidden" name="status" value="@StatusReserva.Concluida" />
+                                                    <button type="submit" class="dropdown-item">Marcar como Concluída</button>
+                                                </form>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

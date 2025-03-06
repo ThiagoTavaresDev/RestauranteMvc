@@ -1,0 +1,71 @@
+@model IEnumerable<RestauranteMvc.Models.Reserva>
+@{
+    ViewData["Title"] = "Minhas Reservas";
+}
+
+<div class="container">
+    <h1 class="my-4">Minhas Reservas</h1>
+    
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            Você ainda não possui reservas. <a asp-action="Create">Faça sua primeira reserva</a>.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Pessoas</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var reserva in Model)
+                    {
+                        <tr>
+                            <td>@reserva.Data.ToShortDateString()</td>
+                            <td>@reserva.Horario.ToString(@"hh\:mm")</td>
+                            <td>@reserva.NumeroPessoas</td>
+                            <td>
+                                @switch (reserva.Status)
+                                {
+                                    case StatusReserva.Pendente:
+                                        <span class="badge bg-warning text-dark">Pendente</span>
+                                        break;
+                                    case StatusReserva.Confirmada:
+                                        <span class="badge bg-success">Confirmada</span>
+                                        break;
+                                    case StatusReserva.Cancelada:
+                                        <span class="badge bg-danger">Cancelada</span>
+                                        break;
+                                    case StatusReserva.Concluida:
+                                        <span class="badge bg-info">Concluída</span>
+                                        break;
+                                }
+                            </td>
+                            <td>
+                                @if (reserva.Status == StatusReserva.Pendente || reserva.Status == StatusReserva.Confirmada)
+                                {
+                                    <a asp-action="Cancel" asp-route-id="@reserva.ReservaId" class="btn btn-sm btn-danger" 
+                                       onclick="return confirm('Tem certeza que deseja cancelar esta reserva?')">
+                                        Cancelar
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    
+    <div class="mt-4">
+        <a asp-action="Create" class="btn btn-primary">Nova Reserva</a>
+    </div>
+</div>

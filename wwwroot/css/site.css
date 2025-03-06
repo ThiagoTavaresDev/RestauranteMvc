@@ -61,13 +61,6 @@ button.accept-policy {
     line-height: inherit;
 }
 
-.footer {
-    position: relative;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px;
-    margin-top: auto;
-}
 
 html {
     font-size: 14px;

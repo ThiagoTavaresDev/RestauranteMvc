@@ -9,7 +9,7 @@ namespace RestauranteMvc.Filters
         {
             var tipoUsuario = context.HttpContext.Session.GetString("TipoUsuario");
             
-            if (string.IsNullOrEmpty(tipoUsuario) || tipoUsuario != "Admin")
+            if (string.IsNullOrEmpty(tipoUsuario))
             {
                 // Redireciona para login se não estiver autenticado
                 context.Result = new RedirectToActionResult("Login", "Account", null);

@@ -9,11 +9,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RestauranteMvc.Data;
 using RestauranteMvc.Dtos;
+using RestauranteMvc.Filters;
 using RestauranteMvc.Models;
 
 namespace RestauranteMvc.Controllers
 {
     [Route("[controller]")]
+    [TypeFilter(typeof(AdminAuthFilter))]
     public class ReservasController : Controller
     {
         private readonly RestauranteContext _context;
@@ -25,8 +27,6 @@ namespace RestauranteMvc.Controllers
         
         [HttpGet]
         [Route("")]
-        [Route("Index")]
-        [Authorize]
         public IActionResult Index()
         {
             int usuarioId = HttpContext.Session.GetInt32("UsuarioId").Value;
@@ -36,7 +36,6 @@ namespace RestauranteMvc.Controllers
         
         [HttpGet]
         [Route("Create")]
-        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -45,7 +44,6 @@ namespace RestauranteMvc.Controllers
         [HttpPost]
         [Route("Create")]
         [ValidateAntiForgeryToken]
-        [Authorize]
         public async Task<IActionResult> Create(ReservaViewDto model)
         {
             if (ModelState.IsValid)
@@ -72,7 +70,7 @@ namespace RestauranteMvc.Controllers
         
         [HttpGet]
         [Route("Cancel/{id}")]
-        [Authorize]
+       // [Authorize]
         public IActionResult Cancel(int id)
         {
             var reserva = _context.Reservas.Find(id);
@@ -96,7 +94,7 @@ namespace RestauranteMvc.Controllers
         
         [HttpGet]
         [Route("Admin")]
-        [Authorize(Roles = "Admin")]
+      //  [Authorize(Roles = "Admin")]
         public IActionResult AdminList()
         {
             var reservas = _context.Reservas.Include(r => r.Usuario).ToList();
@@ -106,7 +104,7 @@ namespace RestauranteMvc.Controllers
         [HttpPost]
         [Route("UpdateStatus")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+      //  [Authorize(Roles = "Admin")]
         public IActionResult UpdateStatus(int id, StatusReserva status)
         {
             var reserva = _context.Reservas.Find(id);

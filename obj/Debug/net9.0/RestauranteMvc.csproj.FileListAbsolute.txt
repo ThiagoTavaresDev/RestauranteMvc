@@ -441,6 +441,6 @@ C:\Users\Thiag\Desktop\RestauranteMvc\obj\Debug\net9.0\RestauranteMvc.pdb
 C:\Users\Thiag\Desktop\RestauranteMvc\obj\Debug\net9.0\RestauranteMvc.genruntimeconfig.cache
 C:\Users\Thiag\Desktop\RestauranteMvc\obj\Debug\net9.0\ref\RestauranteMvc.dll
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\RestauranteMvc.sourcelink.json
-C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\ssel5aqqbp-khvf9fx418.gz
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\tdp2z13n4b-2qoad3l8um.gz
 C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\qiscu6nqcl-2qoad3l8um.gz
+C:\Users\Thzin\Desktop\RestauranteMvc\obj\Debug\net9.0\compressed\ssel5aqqbp-pjgxaj3cxf.gz

@@ -12,8 +12,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>khvf9fx418</Fingerprint>
-      <Integrity>KKIMhFUaiHt1zOlV0vt3JnnrckoL8B/tMW9Se2Jg+2c=</Integrity>
+      <Fingerprint>pjgxaj3cxf</Fingerprint>
+      <Integrity>BXi3/LpTYh5MTfChsNziESjS1APDHF2CfZRjwIBCSrM=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</OriginalItemSpec>
@@ -53,6 +53,24 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\imagem_teste.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\pratos\0fe66760-fce6-44a5-9009-7ddcc4705034_Captura de tela 2025-03-06 003054.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>RestauranteMvc</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/RestauranteMvc</BasePath>
+      <RelativePath>images/pratos/0fe66760-fce6-44a5-9009-7ddcc4705034_Captura de tela 2025-03-06 003054.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>zgbgo66n6k</Fingerprint>
+      <Integrity>7VFFKrTqqrPBDblHqERBSmiNBB+Fzn65EHyKjmMy45o=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\pratos\0fe66760-fce6-44a5-9009-7ddcc4705034_Captura de tela 2025-03-06 003054.png'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\pratos\54382ebe-3a93-44f9-be5b-cdc41f680b16_image_with_updated_background.png'))">
       <SourceType>Package</SourceType>

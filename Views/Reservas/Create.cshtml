@@ -1,0 +1,87 @@
+@using RestauranteMvc.Dtos
+@model ReservaViewDto
+@{
+    ViewData["Title"] = "Fazer Reserva";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h1 class="my-4">Faça sua Reserva</h1>
+            
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="form-group">
+                    <label asp-for="Data" class="control-label"></label>
+                    <input asp-for="Data" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Data" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="Horario" class="control-label"></label>
+                    <input asp-for="Horario" class="form-control" type="time" step="1800" min="08:00" max="23:00" />
+                    <span asp-validation-for="Horario" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="NumeroPessoas" class="control-label"></label>
+                    <select asp-for="NumeroPessoas" class="form-control">
+                        @for (int i = 1; i <= 20; i++)
+                        {
+                            <option value="@i">@i pessoa(s)</option>
+                        }
+                    </select>
+                    <span asp-validation-for="NumeroPessoas" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="Observacoes" class="control-label"></label>
+                    <textarea asp-for="Observacoes" class="form-control" rows="3" placeholder="Ocasião especial? Alguma preferência?"></textarea>
+                    <span asp-validation-for="Observacoes" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    @if (Context.Session.GetString("NomeUsuario") != null)
+                    {
+                        <button type="submit" class="btn btn-primary">Solicitar Reserva</button>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">
+                            <p>Para fazer uma reserva, é necessário ter uma conta e estar logado.</p>
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Fazer Login</a>
+                            <a asp-controller="Account" asp-action="Registro" class="btn btn-outline-primary">Cadastrar-se</a>
+                        </div>
+                    }
+                </div>
+            </form>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="reservation-info mt-4">
+                <img src="~/images/restaurant-interior.jpg" class="img-fluid rounded mb-4" alt="Interior do Restaurante">
+                
+                <h3>Informações sobre Reservas</h3>
+                <p>Nosso restaurante está aberto para reservas nos seguintes horários:</p>
+                
+                <ul class="list-group mb-4">
+                    <li class="list-group-item">Segunda a Sexta: 11h às 23h</li>
+                    <li class="list-group-item">Sábados e Domingos: 11h às 00h</li>
+                </ul>
+                
+                <div class="alert alert-warning">
+                    <h5>Política de Reservas</h5>
+                    <p>As reservas são confirmadas em até 2 horas. Em caso de cancelamento, pedimos que avise com pelo menos 4 horas de antecedência.</p>
+                    <p>Para grupos com mais de 10 pessoas, favor entrar em contato pelo telefone.</p>
+                </div>
+                
+                <p>Para mais informações, entre em contato: (11) 1234-5678</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

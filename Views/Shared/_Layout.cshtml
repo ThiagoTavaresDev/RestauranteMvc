@@ -17,7 +17,7 @@
                     <img src="~/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
                     Restaurante Gourmet
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -30,13 +30,13 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Cardapio">Cardápio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Reservas" asp-action="Create">Reservas</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Reservas" asp-action="Index">Reservas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Sobre">Sobre</a>
+                            <a class="nav-link text-light" href="#section_about_us">Sobre</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Contato">Contato</a>
+                            <a class="nav-link text-light" href="#footer_site">Contato</a>
                         </li>
                         @if (Context.Session.GetString("TipoUsuario") == "Admin")
                         {
@@ -48,7 +48,7 @@
                                     <li><a class="dropdown-item" asp-controller="Pratos" asp-action="Index">Gerenciar Pratos</a></li>
                                     <li><a class="dropdown-item" asp-controller="Categorias" asp-action="Index">Gerenciar Categorias</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" asp-controller="Reservas" asp-action="ListAll">Gerenciar Reservas</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Reservas" asp-action="AdminList">Gerenciar Reservas</a></li>
                                     <li><a class="dropdown-item" asp-controller="Pedidos" asp-action="ListAll">Gerenciar Pedidos</a></li>
                                 </ul>
                             </li>
@@ -59,21 +59,21 @@
                         @if (Context.Session.GetString("NomeUsuario") != null)
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fas fa-user"></i> @Context.Session.GetString("NomeUsuario")
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     @if (Context.Session.GetString("TipoUsuario") == "Admin")
                                     {
-                                        <a class="dropdown-item" asp-controller="Pratos" asp-action="Index">Gerenciar Pratos</a>
-                                        <a class="dropdown-item" asp-controller="Reservas" asp-action="AdminList">Gerenciar Reservas</a>
-                                        <a class="dropdown-item" asp-controller="Pedidos" asp-action="GerenciarPedidos">Gerenciar Pedidos</a>
-                                        <div class="dropdown-divider"></div>
+                                        <li><a class="dropdown-item" asp-controller="Pratos" asp-action="Index">Gerenciar Pratos</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Reservas" asp-action="AdminList">Gerenciar Reservas</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Pedidos" asp-action="GerenciarPedidos">Gerenciar Pedidos</a></li>
+                                        <li><hr class="dropdown-divider"></li>
                                     }
-                                    <a class="dropdown-item" asp-controller="Reservas" asp-action="Index">Minhas Reservas</a>
-                                    <a class="dropdown-item" asp-controller="Pedidos" asp-action="MeusPedidos">Meus Pedidos</a>
-                                    <a class="dropdown-item" asp-controller="Account" asp-action="Logout">Sair</a>
-                                </div>
+                                    <li><a class="dropdown-item" asp-controller="Reservas" asp-action="Index">Minhas Reservas</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Pedidos" asp-action="MeusPedidos">Meus Pedidos</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Sair</a></li>
+                                </ul>
                             </li>
                         }
                         else
@@ -111,9 +111,7 @@
             {
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     @TempData["Sucesso"]
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             }
             
@@ -121,17 +119,15 @@
             {
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     @TempData["Erro"]
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             }
             
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted bg-dark">
+    
+    <footer class="border-top footer text-muted bg-dark" id="footer_site">
         <div class="container text-center text-light">
             <div class="row py-4">
                 <div class="col-md-4">
