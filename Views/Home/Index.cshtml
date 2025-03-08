@@ -116,24 +116,35 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function() {
-            $('.add-to-cart').click(function() {
-                var pratoId = $(this).data('id');
-                
-                $.ajax({
-                    url: '@Url.Action("AdicionarAoCarrinho", "Pedidos")',
-                    type: 'POST',
-                    data: { pratoId: pratoId, quantidade: 1 },
-                    success: function(response) {
-                        if (response.success) {
-                            $('#cart-count').text(response.count);
-                            toastr.success(response.message);
-                        } else {
-                            toastr.error(response.message);
-                        }
+      $(document).ready(function() {
+    $('.add-to-cart').click(function() {
+        var pratoId = $(this).data('id');
+        
+        $.ajax({
+            url: '/Pedidos/AdicionarAoCarrinho',
+            type: 'POST',
+            data: { pratoId: pratoId, quantidade: 1 },
+            success: function(response) {
+                if (response.success) {
+                    // Atualiza o contador de itens no carrinho (se existir)
+                    if ($('#cart-count').length) {
+                        $('#cart-count').text(response.count);
                     }
-                });
-            });
+                    
+                    // Exibe mensagem de sucesso usando toastr (se disponível)
+                    if (typeof toastr !== 'undefined') {
+                        toastr.success(response.message);
+                    } 
+                } else {w
+                    if (typeof toastr !== 'undefined') {
+                        toastr.error(response.message);
+                    } else {
+                        alert("Erro: " + response.message);
+                    }
+                }
+            }
         });
+    });
+});
     </script>
 }

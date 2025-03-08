@@ -68,6 +68,7 @@ namespace RestauranteMvc.Controllers
         HttpContext.Session.SetObjectAsJson("Carrinho", carrinho);
         
         return Json(new { success = true, message = "Produto adicionado ao carrinho", count = carrinho.Sum(i => i.Quantidade) });
+    
     }
     
     [HttpPost]

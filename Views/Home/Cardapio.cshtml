@@ -52,19 +52,19 @@
                                     <p class="price">R$ @prato.Preco.ToString("F2")</p>
                                 </div>
                                 <div class="card-footer bg-transparent border-top-0">
-                                    <form asp-controller="Pedidos" asp-action="AdicionarAoCarrinho" method="post">
-                                        <input type="hidden" name="pratoId" value="@prato.PratoId" />
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="quantity-control">
-                                                <button type="button" class="btn btn-sm btn-outline-secondary qty-btn" onclick="decreaseQty(this)">-</button>
-                                                <input type="number" name="quantidade" class="form-control form-control-sm qty-input" value="1" min="1" max="10">
-                                                <button type="button" class="btn btn-sm btn-outline-secondary qty-btn" onclick="increaseQty(this)">+</button>
-                                            </div>
-                                            <button type="submit" class="btn btn-success btn-sm">
-                                                <i class="fas fa-cart-plus"></i> Adicionar
-                                            </button>
+                                  <form id="form-add-to-cart-@prato.PratoId">
+                                    <input type="hidden" name="pratoId" value="@prato.PratoId" />
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="quantity-control">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary qty-btn" onclick="decreaseQty(this)">-</button>
+                                            <input type="number" name="quantidade" class="form-control form-control-sm qty-input" value="1" min="1" max="10">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary qty-btn" onclick="increaseQty(this)">+</button>
                                         </div>
-                                    </form>
+                                        <button type="button" class="btn btn-success btn-sm add-to-cart" data-id="@prato.PratoId">
+                                            <i class="fas fa-cart-plus"></i> Adicionar
+                                        </button>
+                                    </div>
+                                </form>
                                 </div>
                             </div>
                         </div>
@@ -77,55 +77,85 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function() {
-            // Filtragem por categoria
-            $('.category-menu .nav-link').click(function(e) {
-                e.preventDefault();
-                
-                $('.category-menu .nav-link').removeClass('active');
-                $(this).addClass('active');
-                
-                var categoryId = $(this).data('category');
-                
-                if (categoryId === 'all') {
-                    $('.menu-item').show();
-                } else {
-                    $('.menu-item').hide();
-                    $('.menu-item[data-category="' + categoryId + '"]').show();
-                }
-            });
-            
-            // Busca
-            $('#search-menu').on('keyup', function() {
-                var searchText = $(this).val().toLowerCase();
-                
-                $('.menu-item').each(function() {
-                    var itemName = $(this).data('name');
-                    
-                    if (itemName.includes(searchText)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
+    $(document).ready(function() {
+    // Código existente para adicionar ao carrinho
+    $('.add-to-cart').click(function() {
+        var pratoId = $(this).data('id');
+        var form = $('#form-add-to-cart-' + pratoId);
+        var quantidade = form.find('input[name="quantidade"]').val();
+        
+        $.ajax({
+            url: '/Pedidos/AdicionarAoCarrinho',
+            type: 'POST',
+            data: { pratoId: pratoId, quantidade: quantidade },
+            success: function(response) {
+                if (response.success) {
+                    // Atualiza o contador de itens no carrinho (se existir)
+                    if ($('#cart-count').length) {
+                        $('#cart-count').text(response.count);
                     }
-                });
-            });
+                    
+                    // Exibe mensagem de sucesso
+                    // Ou use toastr se disponível:
+                    // toastr.success(response.message);
+                } else {
+                    alert("Erro: " + response.message);
+                    // Ou use toastr se disponível:
+                    // toastr.error(response.message);
+                }
+            }
         });
+    });
+    
+    // Código existente para filtragem por categoria e busca
+    $('.category-menu .nav-link').click(function(e) {
+        e.preventDefault();
         
-        // Funções para controle de quantidade
-        function decreaseQty(btn) {
-            var input = $(btn).siblings('.qty-input');
-            var currentValue = parseInt(input.val());
-            if (currentValue > 1) {
-                input.val(currentValue - 1);
-            }
-        }
+        $('.category-menu .nav-link').removeClass('active');
+        $(this).addClass('active');
         
-        function increaseQty(btn) {
-            var input = $(btn).siblings('.qty-input');
-            var currentValue = parseInt(input.val());
-            if (currentValue < 10) {
-                input.val(currentValue + 1);
-            }
+        var categoryId = $(this).data('category');
+        
+        if (categoryId === 'all') {
+            $('.menu-item').show();
+        } else {
+            $('.menu-item').hide();
+            $('.menu-item[data-category="' + categoryId + '"]').show();
         }
+    });
+    
+    // Busca
+    $('#search-menu').on('keyup', function() {
+        var searchText = $(this).val().toLowerCase();
+        
+        $('.menu-item').each(function() {
+            var itemName = $(this).data('name');
+            
+            if (itemName.includes(searchText)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+});
+
+// Funções para controle de quantidade
+function decreaseQty(btn) {
+    var input = $(btn).siblings('.qty-input');
+    var currentValue = parseInt(input.val());
+    if (currentValue > 1) {
+        input.val(currentValue - 1);
+    }
+}
+
+function increaseQty(btn) {
+    var input = $(btn).siblings('.qty-input');
+    var currentValue = parseInt(input.val());
+    if (currentValue < 10) {
+        input.val(currentValue + 1);
+    }
+}
+
     </script>
 }

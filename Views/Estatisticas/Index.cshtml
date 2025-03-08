@@ -1,0 +1,191 @@
+@{
+    ViewData["Title"] = "Estatísticas do Restaurante";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Estatísticas do Restaurante</h2>
+
+@if (!string.IsNullOrEmpty(ViewBag.MensagemErro))
+{
+    <div class="alert alert-warning">
+        <p>@ViewBag.MensagemErro</p>
+        <p>Para visualizar estatísticas, certifique-se de que existam:</p>
+        <ul>
+            <li>Reservas cadastradas no sistema</li>
+            <li>Pedidos realizados com itens</li>
+            <li>Pratos cadastrados e associados a categorias</li>
+        </ul>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Reservas nos Últimos 30 Dias</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="reservasChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Média de Pessoas por Reserva</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="convidadosChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Pedidos por Categoria</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="categoriasChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Top 10 Pratos Mais Pedidos</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="pratosChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Verificar se existem dados para cada gráfico
+                var temDadosReserva = @(string.IsNullOrEmpty(ViewBag.DatasReservas) ? "false" : "true");
+                var temDadosConvidados = @(string.IsNullOrEmpty(ViewBag.DatasConvidados) ? "false" : "true");
+                var temDadosCategorias = @(string.IsNullOrEmpty(ViewBag.NomesCategorias) ? "false" : "true");
+                var temDadosPratos = @(string.IsNullOrEmpty(ViewBag.NomesPratos) ? "false" : "true");
+
+                // Dados para o gráfico de reservas
+                if (temDadosReserva) {
+                    var reservasCtx = document.getElementById('reservasChart').getContext('2d');
+                    var reservasChart = new Chart(reservasCtx, {
+                        type: 'line',
+                        data: {
+                            labels: @Html.Raw(ViewBag.DatasReservas),
+                            datasets: [{
+                                label: 'Quantidade de Reservas',
+                                data: @Html.Raw(ViewBag.QuantidadesReservas),
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    document.getElementById('reservasChart').innerHTML = 'Não há dados suficientes';
+                }
+                
+                // Dados para o gráfico de média de convidados
+                if (temDadosConvidados) {
+                    var convidadosCtx = document.getElementById('convidadosChart').getContext('2d');
+                    var convidadosChart = new Chart(convidadosCtx, {
+                        type: 'line',
+                        data: {
+                            labels: @Html.Raw(ViewBag.DatasConvidados),
+                            datasets: [{
+                                label: 'Média de Pessoas por Reserva',
+                                data: @Html.Raw(ViewBag.MediasConvidados),
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    document.getElementById('convidadosChart').innerHTML = 'Não há dados suficientes';
+                }
+                
+                // Dados para o gráfico de pedidos por categoria
+                if (temDadosCategorias) {
+                    var categoriasCtx = document.getElementById('categoriasChart').getContext('2d');
+                    var categoriasChart = new Chart(categoriasCtx, {
+                        type: 'pie',
+                        data: {
+                            labels: @Html.Raw(ViewBag.NomesCategorias),
+                            datasets: [{
+                                data: @Html.Raw(ViewBag.QuantidadesPorCategoria),
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.7)',
+                                    'rgba(54, 162, 235, 0.7)',
+                                    'rgba(255, 206, 86, 0.7)',
+                                    'rgba(75, 192, 192, 0.7)',
+                                    'rgba(153, 102, 255, 0.7)',
+                                    'rgba(255, 159, 64, 0.7)'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true
+                        }
+                    });
+                } else {
+                    document.getElementById('categoriasChart').innerHTML = 'Não há dados suficientes';
+                }
+                
+                // Dados para o gráfico de pratos mais pedidos
+                if (temDadosPratos) {
+                    var pratosCtx = document.getElementById('pratosChart').getContext('2d');
+                    var pratosChart = new Chart(pratosCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: @Html.Raw(ViewBag.NomesPratos),
+                            datasets: [{
+                                label: 'Quantidade de Pedidos',
+                                data: @Html.Raw(ViewBag.QuantidadesPratos),
+                                backgroundColor: 'rgba(255, 159, 64, 0.7)',
+                                borderColor: 'rgba(255, 159, 64, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    document.getElementById('pratosChart').innerHTML = 'Não há dados suficientes';
+                }
+            });
+        </script>
+    }
+}

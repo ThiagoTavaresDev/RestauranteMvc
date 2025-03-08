@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using RestauranteMvc.Data;
@@ -12,14 +13,14 @@ builder.Services.AddDbContext<RestauranteContext>(options =>
 builder.Services.AddControllersWithViews();
 
 
-builder.Services.AddAuthentication(options => {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options => {
-    // Configurações do JWT
-});
+// builder.Services.AddAuthentication(options => {
+//     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+// })
+// .AddJwtBearer(options => {
+//     // Configurações do JWT
+// });
 
 
 // Configuração de sessão
@@ -31,6 +32,13 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+    });
 
 
 
@@ -46,6 +54,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 
